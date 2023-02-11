@@ -5,9 +5,9 @@ import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 
 export function CartWidget() {
-
-  const {cartList}  = useContext(CartContext)
-  console.log(cartList)
+  
+  const {totalQuantity }  = useContext(CartContext)
+  
 
   return (
     <>
@@ -18,7 +18,7 @@ export function CartWidget() {
         alignItems={"center"}
       >
         <NavLink to="/cart">
-          <FaShoppingCart /> {cartList.length}
+          <FaShoppingCart /> <p>{totalQuantity()}</p>
         </NavLink>
       </Flex>
     </>

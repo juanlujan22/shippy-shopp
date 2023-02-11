@@ -49,9 +49,14 @@ export function ItemDetail({ item }) {
           {
             added  
             ?
-            <NavLink to="/cart"> 
-              <Button>Ir al Carrito</Button>
-            </NavLink>
+            <div p="5">
+              <NavLink to="/cart"> 
+                <Button p="5" ml="3">Ir al Carrito</Button>
+              </NavLink>
+              <NavLink to="/"> 
+                <Button p="5" ml="3">Ir a Principal</Button>
+              </NavLink>
+            </div>
             :
             <Stack pl="6" flexDirection="row" > 
               <ItemCount stock={10} incial={1} onAdd={onAdd} /> 
