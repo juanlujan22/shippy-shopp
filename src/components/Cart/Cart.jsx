@@ -1,6 +1,7 @@
 import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 import { Center, VStack, HStack, Image, Text, Button } from "@chakra-ui/react";
+import CheckOut from "../CheckOut/CheckOut";
 export function Cart() {
   const { cartList, deleteItem, removeList, totalPrice } = useContext(CartContext);
   const render= () => { return cartList.map( product =>{ 
