@@ -10,7 +10,7 @@ export function ItemListContainer() {
   const [listaProductos, setListaProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const { category } = useParams();
- 
+
   useEffect(() => {
     const productosCollection = collection(db, "productos");
     const pedido = getDocs(productosCollection);
@@ -20,9 +20,11 @@ export function ItemListContainer() {
         const productos = snapshot.docs.map((doc) => {
           return { ...doc.data(), id: doc.id };
         });
-        console.log(productos);
+       
         if (category) {
-          setListaProductos(productos.filter(producto=>producto.category===category));
+          setListaProductos(
+            productos.filter((producto) => producto.category === category)
+          );
           setLoading(false);
         } else {
           setListaProductos(productos);

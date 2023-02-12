@@ -1,27 +1,30 @@
-import { useState } from "react"
+import { useState } from "react";
 import { HStack, Button, Text } from "@chakra-ui/react";
 
+export function ItemCount({ stock, incial, onAdd }) {
+  const [count, setCount] = useState(incial);
 
-export function  ItemCount ({stock, incial, onAdd}) {
+  const suma = () => count < stock && setCount(count + 1);
 
-   const [count, setCount]=useState(incial)
-   
-   
+  const resta = () => count > incial && setCount(count - 1);
 
-   const suma= ()=> count < stock && setCount(count+1) 
-
-   const resta=()=> count > incial && setCount(count-1)
-
-   
   return (
     <>
-        <HStack >
-            <Text> Cantidad:  {count} </Text> 
-            <Button onClick={resta}> - </Button>
-            <Button onClick={suma}> + </Button>
-        </HStack>
-        <Button onClick={()=> onAdd(count)}> Agregar al Carrito </Button>
-        
+      <HStack alignItems="flex-end" justifyContent="space-evenly">
+        <Text> Cantidad: {count} </Text>
+        <Button colorScheme="orange" onClick={resta}>
+          {" "}
+          -{" "}
+        </Button>
+        <Button colorScheme="orange" onClick={suma}>
+          {" "}
+          +{" "}
+        </Button>
+      </HStack>
+      <Button colorScheme="orange" onClick={() => onAdd(count)}>
+        {" "}
+        Agregar al Carrito{" "}
+      </Button>
     </>
-  )
+  );
 }

@@ -2,86 +2,124 @@ import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-    FormControl,
-    FormLabel,
-    Center,
-    Input,
-    Text,
-    VStack,
-    Button,
-    Box
-  } from '@chakra-ui/react'
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  FormControl,
+  FormLabel,
+  Center,
+  Input,
+  Text,
+  VStack,
+  Button,
+  Box,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Stack,
+} from "@chakra-ui/react";
+
 const CheckOut = () => {
-    const navigate = useNavigate();
-    const [visible, setVisible]=useState(false)
-    const [input, setInput] = useState({
-        nombre:"",
-        apellido:"",
-        telefono:"",
-    })
+  const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
+  const [input, setInput] = useState({
+    nombre: "",
+    apellido: "",
+    telefono: "",
+  });
 
-    console.log(input)
-    const {cartList}  = useContext(CartContext)
-    
-    function handleSubmit(e) {
-        e.preventDefault()
-        console.log("submit")
-        setVisible(true)
-    } 
+  const { cartList, totalPrice } = useContext(CartContext);
+  console.log(cartList[0].title);
+  function handleSubmit(e) {
+    e.preventDefault();
+    setVisible(true);
+  }
 
-    const handleClick =()=>{
-        navigate("/orden")
-    }
+  const handleClick = () => {
+    VerticallyCenter();
+  };
 
-    const handleChange= e=>{
-        setInput({...input, 
-        [e.target.name] : e.target.value})
-    }
-    const handleCancel =()=>{
-        navigate("/cart")
-    }
-    const renderFormulario =()=>{
-        return (
-            <VStack hidden={visible}>
-                <Text> Para continuar con la compra, por favor brindanos tus datos</Text>
-                <Center border="solid 0.5px black" p={10}>
-                <FormControl>
-                    <form onSubmit={handleSubmit}>
-                        <FormControl isRequired>
-                        <FormLabel>Nombre Completo</FormLabel>
-                        <Input value={input.name} onChange={handleChange} name="nombre" placeholder='Nombre Completo' />
-                        </FormControl>
-                        <FormControl isRequired>
-                        <FormLabel>Apellido</FormLabel>
-                        <Input value={input.apellido} onChange={handleChange} name="apellido" placeholder='Apellido' />
-                        </FormControl>
-                        <FormControl isRequired>
-                        <FormLabel>Telefono</FormLabel>
-                        <Input value={input.telefono} type="number" onChange={handleChange} name="telefono" placeholder='Telefono' />
-                        </FormControl>
-                        <Button type="submit" >Aceptar</Button>
-                        <Button onClick={()=>{handleCancel()}} > Cancelar </Button>
-                    </form>
-                </FormControl>
-                </Center>
-            </VStack>
-        )
-    }
+  const handleChange = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+  const handleCancel = () => {
+    navigate("/cart");
+  };
 
+  const handleClose = ()=>{
+    navigate("/");
+  }
+  const renderFormulario = () => {
+    return (
+      <VStack hidden={visible}>
+        <Text color="black" fontSize="3xl">
+          Para continuar con la compra, por favor brindanos tus datos
+        </Text>
+        <Center border="solid 0.5px black" p={10}>
+          <FormControl>
+            <form onSubmit={handleSubmit}>
+              <FormControl isRequired>
+                <FormLabel>Nombre Completo</FormLabel>
+                <Input
+                  value={input.name}
+                  onChange={handleChange}
+                  name="nombre"
+                  placeholder="Nombre Completo"
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Apellido</FormLabel>
+                <Input
+                  value={input.apellido}
+                  onChange={handleChange}
+                  name="apellido"
+                  placeholder="Apellido"
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Telefono</FormLabel>
+                <Input
+                  value={input.telefono}
+                  type="number"
+                  onChange={handleChange}
+                  name="telefono"
+                  placeholder="Telefono"
+                />
+              </FormControl>
+              <Button m={10} colorScheme="orange" type="submit">
+                Aceptar
+              </Button>
+              <Button
+                m={10}
+                colorScheme="orange"
+                onClick={() => {
+                  handleCancel();
+                }}
+              >
+                Cancelar
+              </Button>
+            </form>
+          </FormControl>
+        </Center>
+      </VStack>
+    );
+  };
 
-    const renderTable=()=>{
-        return cartList.map((product) => {
-        return (
-        <TableContainer p={10}>
-            <Table variant='striped' colorScheme='teal'>
+  const renderTable = () => {
+    return cartList.map((product) => {
+      return (
+        <Stack>
+            <TableContainer key={product.id} p={10}>
+            <Table variant="striped" colorScheme="yellow">
                 <Thead>
                 <Tr>
                     <Th>Producto</Th>
@@ -97,19 +135,73 @@ const CheckOut = () => {
                 </Tr>
                 </Tbody>
             </Table>
-            <Box display="flex" flexDirection="row-reverse" justifyContent="space-around" >
-              <Button hidden={!visible} colorScheme="orange" onClick={()=>{handleClick()}} >Terminar la Comprar</Button>
+            </TableContainer>
+        </Stack>
+      );
+    });
+  };
+
+  function VerticallyCenter() {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    return (
+      <>
+        <Stack hidden={!visible}>
+            <Box p="5" textStyle="h1" >
+                <Text
+                    p={3}
+                    display="flex"
+                    justifyContent="center"
+                    border="solid 0.5px black"
+                >
+                    {" "}
+                    Total Price: ${totalPrice()}
+                </Text>
             </Box>
-        </TableContainer>
-        );
-        });
-    };
+          <Button m={10} p={10} colorScheme="whatsapp" onClick={onOpen}>
+            Finalizar Compra
+          </Button>
+          <Modal onClose={onClose} isOpen={isOpen} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Datos de la Compra</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                {" "}
+                {cartList.map((prod) => {
+                  return (
+                    <Stack key={prod.id}>
+                      <Text>Id: {prod.id}</Text>
+                      <Text>Producto: {prod.title}</Text>
+                      <Text>Cantidad: {prod.qty}</Text>
+                      <Text>Precio: ${prod.price}</Text>
+                      <Text color="green" fontSize="xl">
+                        Estado: Compra Realizada
+                      </Text>
+                    </Stack>
+                  );
+                })}
+              </ModalBody>
+              <ModalFooter justifyContent="space-around">
+                <Text>En breve nos pondremos en contacto</Text>
+                
+                <Button colorScheme="orange" onClick={(onClose, handleClose)}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Stack>
+      </>
+    );
+  }
 
   return (
-    <div>
-        {renderFormulario()}
-        {renderTable()}
-    </div>
-  )
-}
-export default CheckOut 
+    <>
+      {renderFormulario()}
+      {renderTable()}
+      {VerticallyCenter()}
+    </>
+  );
+};
+export default CheckOut;

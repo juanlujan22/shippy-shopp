@@ -12,17 +12,17 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export function Cart() {
- const [visible, setVisible ]=useState(false)
- console.log(visible)
+  const [visible, setVisible] = useState(false);
+  console.log(visible);
   const { cartList, deleteItem, removeList, totalPrice } =
-  useContext(CartContext);
+    useContext(CartContext);
   const navigate = useNavigate();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (cartList.length > 0) {
-      setVisible(true)
+      setVisible(true);
     }
-  },[cartList]);
+  }, [cartList]);
 
   const renderBody = () => {
     return cartList.map((product) => {
@@ -57,49 +57,55 @@ export function Cart() {
     });
   };
 
-
- const onCompra = () => {
+  const onCompra = () => {
     navigate("/compra");
   };
 
   const renderBtns = () => {
     return (
-      <Box display="flex" justifyContent="space-evenly" alignItems="center" >
-          <Box>
-            <Button hidden={!visible} colorScheme="orange" onClick={() => removeList()}>
-              {" "}
-              Borrar Todo{" "}
-            </Button>
-          </Box>
-          <Box p="5" textStyle="h1" color="orange">
-            <Text
-              p={3}
-              display="flex"
-              justifyContent="center"
-              border="solid 0.5px black"
-            >
-              {" "}
-              Total Price: ${totalPrice()}
-            </Text>
-          </Box>
-          <Box>
-            <Button hidden={!visible} colorScheme="orange" onClick={()=>{onCompra()}} >           
-              Comprar
-            </Button>
-          </Box>
+      <Box display="flex" justifyContent="space-evenly" alignItems="center">
+        <Box>
+          <Button
+            hidden={!visible}
+            colorScheme="orange"
+            onClick={() => removeList()}
+          >
+            {" "}
+            Borrar Todo{" "}
+          </Button>
         </Box>
-    )
-  }
-    
+        <Box p="5" textStyle="h1" color="orange">
+          <Text
+            p={3}
+            display="flex"
+            justifyContent="center"
+            border="solid 0.5px black"
+          >
+            {" "}
+            Total Price: ${totalPrice()}
+          </Text>
+        </Box>
+        <Box>
+          <Button
+            hidden={!visible}
+            colorScheme="orange"
+            onClick={() => {
+              onCompra();
+            }}
+          >
+            Comprar
+          </Button>
+        </Box>
+      </Box>
+    );
+  };
 
   return (
     <>
       <div>
-         {renderBody()}
-         {renderBtns()}
-    
+        {renderBody()}
+        {renderBtns()}
       </div>
     </>
   );
 }
-
