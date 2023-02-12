@@ -38,6 +38,7 @@ const CheckOut = () => {
     nombre: "",
     apellido: "",
     telefono: "",
+    email:""
   });
 
 
@@ -95,6 +96,16 @@ const CheckOut = () => {
                   onChange={handleChange}
                   name="telefono"
                   placeholder="Telefono"
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>E-Mail</FormLabel>
+                <Input
+                  value={input.email}
+                  type="email"
+                  onChange={handleChange}
+                  name="email"
+                  placeholder="E-Mail"
                 />
               </FormControl>
               <Button m={10} colorScheme="orange" type="submit">
