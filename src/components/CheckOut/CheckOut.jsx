@@ -1,20 +1,4 @@
-<<<<<<< HEAD
-import {  useNavigate } from "react-router-dom";
-import { Card, Image, Stack, CardBody, Button, Text, Heading } from "@chakra-ui/react";
-import { useContext } from "react";
 
-const CheckOut = () => {
-    const {cartList}  = useContext(CartContext)
-
-    const context = CartContext()
-  return (
-    <div>
-
-    </div>
-  )
-}
-export default CheckOut
-=======
 import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
@@ -45,17 +29,18 @@ import {
   Stack,
 } from "@chakra-ui/react";
 
+
 const CheckOut = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  const { cartList, totalPrice } = useContext(CartContext);
   const [input, setInput] = useState({
     nombre: "",
     apellido: "",
     telefono: "",
   });
 
-  const { cartList, totalPrice } = useContext(CartContext);
-  console.log(cartList[0].title);
+
   function handleSubmit(e) {
     e.preventDefault();
     setVisible(true);
@@ -221,5 +206,6 @@ const CheckOut = () => {
     </>
   );
 };
+
 export default CheckOut;
->>>>>>> dev
+

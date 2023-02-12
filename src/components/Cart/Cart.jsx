@@ -1,10 +1,6 @@
 import { CartContext } from "../../context/CartContext";
-<<<<<<< HEAD
-import { useContext } from "react";
-import { Center, VStack, HStack, Image, Text, Button } from "@chakra-ui/react";
-import CheckOut from "../CheckOut/CheckOut";
-=======
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Center,
   VStack,
@@ -14,12 +10,9 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
->>>>>>> dev
 export function Cart() {
   const [visible, setVisible] = useState(false);
-  console.log(visible);
   const { cartList, deleteItem, removeList, totalPrice } =
     useContext(CartContext);
   const navigate = useNavigate();
