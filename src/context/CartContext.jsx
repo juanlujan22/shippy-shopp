@@ -10,12 +10,11 @@ const CartContextProvider = ({ children }) => {
       prod.id === id;
     });
   };
-  // setear biien la cantidad para que se modifique su estado
   const addToCart = (item, qty) => {
     if (isInCart(item.id)) {
       const newCart = cartList.map((prod) => {
         if (prod.id === item.id) {
-          const newQty = prod.qty + qty
+          const newQty = prod.qty + qty;
           return { ...prod, qty: newQty };
         } else {
           return prod;
@@ -29,9 +28,13 @@ const CartContextProvider = ({ children }) => {
   };
   const removeList = () => setCartList([]);
 
-  const totalPrice =()=>{cartList.reduce((total, elem)=> total + elem.price, 0)
-  }
-  
+  const totalPrice = () => {
+    return cartList.reduce(
+      (total, elem) => (total += elem.price * elem.qty),
+      0
+    );
+  };
+
   const deleteItem = (id) => {
     setCartList(
       cartList.filter((prod) => {
@@ -40,9 +43,25 @@ const CartContextProvider = ({ children }) => {
     );
   };
 
+  const cleanCart = () => {
+    setCartList([]);
+  };
+
+  const totalQuantity = () => {
+    return cartList.reduce((acc, product) => (acc += product.qty), 0);
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartList, addToCart, removeList, deleteItem, totalPrice }}
+      value={{
+        cartList,
+        addToCart,
+        removeList,
+        deleteItem,
+        totalPrice,
+        cleanCart,
+        totalQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>

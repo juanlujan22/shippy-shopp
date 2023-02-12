@@ -2,7 +2,7 @@ import { Heading } from "@chakra-ui/react";
 import { Grid } from "@chakra-ui/react";
 import Item from "../Item/Item";
 
-export function ItemList ({saludo, listaProductos}){
+export function ItemList({ saludo, listaProductos }) {
   return (
     <>
       <Grid>
@@ -37,5 +37,4 @@ export function ItemList ({saludo, listaProductos}){
       </Grid>
     </>
   );
-};
-
+}
